@@ -3,150 +3,12 @@
     <h1>Date Picker</h1>
     <h2>{{ store.getDate }}</h2>
     <div class="container" v-if="!store.allDataSet">
-      <div v-show="!store.date.year.isSet">
-        <h3>Is this your year?</h3>
-        <p>{{ store.getYearMiddle }}</p>
-        <span>
-          <button
-            :disabled="store.yearMinButtonDisabled"
-            @click="store.setMin({ type: 'year', value: store.getYearMiddle })"
-          >
-            Too Low
-          </button>
-          <button
-            :disabled="store.date.year.isSet"
-            @click="store.setDate({ type: 'year', value: store.getYearMiddle })"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="store.yearMaxButtonDisabled"
-            @click="store.setMax({ type: 'year', value: store.getYearMiddle })"
-          >
-            Too High
-          </button>
-        </span>
-      </div>
-      <div v-show="!store.date.month.isSet">
-        <h3>Is this your Month?</h3>
-        <p>{{ store.getMonth }}</p>
-        <span>
-          <button
-            :disabled="store.monthMinButtonDisabled"
-            @click="store.setMin({ type: 'month', value: store.getMonthMiddle })"
-          >
-            Too Low
-          </button>
-          <button
-            :disabled="store.date.month.isSet"
-            @click="store.setDate({ type: 'month', value: store.getMonthMiddle })"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="store.monthMaxButtonDisabled"
-            @click="store.setMax({ type: 'month', value: store.getMonthMiddle })"
-          >
-            Too High
-          </button>
-        </span>
-      </div>
-      <div v-show="!store.date.day.isSet">
-        <h3>Is this your Day?</h3>
-        <p>{{ store.getDayMiddle }}</p>
-        <span>
-          <button
-            :disabled="store.dayMinButtonDisabled"
-            @click="store.setMin({ type: 'day', value: store.getDayMiddle })"
-          >
-            Too Low
-          </button>
-          <button
-            :disabled="store.date.day.isSet"
-            @click="store.setDate({ type: 'day', value: store.getDayMiddle })"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="store.dayMaxButtonDisabled"
-            @click="store.setMax({ type: 'day', value: store.getDayMiddle })"
-          >
-            Too High
-          </button>
-        </span>
-      </div>
-      <div v-show="!store.date.hour.isSet">
-        <h3>Is this your Hour?</h3>
-        <p>{{ store.getHourMiddle }}</p>
-        <span>
-          <button
-            :disabled="store.hourMinButtonDisabled"
-            @click="store.setMin({ type: 'hour', value: store.getHourMiddle })"
-          >
-            Too Low
-          </button>
-          <button
-            :disabled="store.date.hour.isSet"
-            @click="store.setDate({ type: 'hour', value: store.getHourMiddle })"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="store.hourMaxButtonDisabled"
-            @click="store.setMax({ type: 'hour', value: store.getHourMiddle })"
-          >
-            Too High
-          </button>
-        </span>
-      </div>
-      <div v-show="!store.date.minute.isSet">
-        <h3>Is this your Minute?</h3>
-        <p>{{ store.getMinuteMiddle }}</p>
-        <span>
-          <button
-            :disabled="store.minuteMinButtonDisabled"
-            @click="store.setMin({ type: 'minute', value: store.getMinuteMiddle })"
-          >
-            Too Low
-          </button>
-          <button
-            :disabled="store.date.minute.isSet"
-            @click="store.setDate({ type: 'minute', value: store.getMinuteMiddle })"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="store.minuteMaxButtonDisabled"
-            @click="store.setMax({ type: 'minute', value: store.getMinuteMiddle })"
-          >
-            Too High
-          </button>
-        </span>
-      </div>
-      <div v-show="!store.date.second.isSet">
-        <h3>Is this your Second?</h3>
-        <p>{{ store.getSecondMiddle }}</p>
-        <span>
-          <button
-            :disabled="store.secondMinButtonDisabled"
-            @click="store.setMin({ type: 'second', value: store.getSecondMiddle })"
-          >
-            Too Low
-          </button>
-          <button
-            :disabled="store.date.second.isSet"
-            @click="store.setDate({ type: 'second', value: store.getSecondMiddle })"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="store.secondMaxButtonDisabled"
-            @click="store.setMax({ type: 'second', value: store.getSecondMiddle })"
-          >
-            Too High
-          </button>
-        </span>
-      </div>
+      <DateSelector
+        v-for="(type, index) in types"
+        :key="index"
+        :type="type"
+        v-show="!store[type].isSet"
+      />
     </div>
     <div class="container" v-if="store.allDataSet">
       <div>
@@ -159,6 +21,7 @@
 </template>
 
 <script setup>
+import DateSelector from "@/components/DateSelector";
 import { useMainStore } from "./stores/mainStore";
 
 const store = useMainStore();
